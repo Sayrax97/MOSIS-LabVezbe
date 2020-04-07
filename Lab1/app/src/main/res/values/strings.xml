@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">LabVezba_1</string>
+    <string name="instruction_text">Life cycle</string>
+    <string name="finish">Finish</string>
+</resources>
