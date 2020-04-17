@@ -1,5 +1,6 @@
 package team4infinty.com;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -55,9 +56,11 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "New Place!", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.my_places_list:
+                startActivity(new Intent(MainActivity.this,MyPlacesList.class));
                 Toast.makeText(this, "My Places", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.about_item:
+                startActivity(new Intent(MainActivity.this,About.class));
                 Toast.makeText(this, "About", Toast.LENGTH_SHORT).show();
                 break;
         }
