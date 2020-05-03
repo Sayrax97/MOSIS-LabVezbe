@@ -29,4 +29,7 @@
     <string name="ViewMyPlace">ViewMyPlaceActivity</string>
     <string name="Ok">OK</string>
     <string name="title_activity_my_places_maps">MyPlacesMapsActivity</string>
+    <string name="longitude">Longitude:</string>
+    <string name="latitude">Latitude:</string>
+    <string name="getLocation">Get Location</string>
 </resources>

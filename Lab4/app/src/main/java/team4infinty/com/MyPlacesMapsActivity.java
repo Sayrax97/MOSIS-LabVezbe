@@ -1,6 +1,9 @@
 package team4infinty.com;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -9,6 +12,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceManager;
 
@@ -24,11 +28,14 @@ import org.osmdroid.tileprovider.tilesource.MapQuestTileSource;
 import org.osmdroid.tileprovider.tilesource.bing.BingMapTileSource;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
+import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
 
 public class MyPlacesMapsActivity extends AppCompatActivity {
     MapView map=null;
     static int NEW_PLACE=1;
     IMapController mapController=null;
+    private static final int PERMISSION_ACCESS_FINE_LOCATION=1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,11 +54,35 @@ public class MyPlacesMapsActivity extends AppCompatActivity {
         Configuration.getInstance().load(getApplicationContext(), PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
         map=findViewById(R.id.map);
         map.setMultiTouchControls(true);
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)!=PackageManager.PERMISSION_GRANTED ){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},PERMISSION_ACCESS_FINE_LOCATION);
+        }else{
+            setMyLocationOverlay();
+        }
         mapController=map.getController();
         if (mapController!=null){
             mapController.setZoom(15.0);
             GeoPoint geoPoint=new GeoPoint(43.3264, 21.9361);
             mapController.setCenter(geoPoint);
+        }
+    }
+
+    private void setMyLocationOverlay(){
+        MyLocationNewOverlay myLocationOverlay=new MyLocationNewOverlay(new GpsMyLocationProvider(this),map);
+        myLocationOverlay.enableMyLocation();
+        map.getOverlays().add(myLocationOverlay);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case PERMISSION_ACCESS_FINE_LOCATION:{
+                if(grantResults.length>0 &&grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                    setMyLocationOverlay();
+                }
+                return;
+            }
         }
     }
 

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:andrlayout_gravity="http://schemas.android.com/tools"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -33,18 +34,75 @@
         android:ems="10"
         android:inputType="textPersonName" />
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/finished"
-            android:layout_weight="1"
-            android:text="@string/finished" />
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+        <!--android:stretchColumns="*"-->
 
-        <Button
-            android:id="@+id/cancvel"
-            android:layout_weight="1"
-            android:text="@string/cancvel" />
-    </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/latitude"
+                    andrlayout_gravity:ignore="HardcodedText" />
+
+                <EditText
+                    android:id="@+id/editLatitude"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"/>
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/longitude"
+                    andrlayout_gravity:ignore="HardcodedText" />
+
+                <EditText
+                    android:id="@+id/editLongitude"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPersonName"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/buttonLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/getLocation"
+                andrlayout_gravity:ignore="HardcodedText" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/finished"
+                android:layout_weight="1"
+                android:text="@string/finished" />
+
+            <Button
+                android:id="@+id/cancvel"
+                android:layout_weight="1"
+                android:text="@string/cancvel"
+                andrlayout_gravity:ignore="ButtonStyle" />
+        </TableRow>
+    </TableLayout>
+
 </LinearLayout>

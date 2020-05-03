@@ -51,6 +51,7 @@ public class EditMyPlaceActivity extends AppCompatActivity implements View.OnCli
         finishButton.setEnabled(false);
 
 
+
         EditText nameET=findViewById(R.id.editName);
         if(!editMode){
             finishButton.setEnabled(false);
@@ -116,17 +117,25 @@ public class EditMyPlaceActivity extends AppCompatActivity implements View.OnCli
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.finished:{
+                EditText latEdit=findViewById(R.id.editLatitude);
+                String lat=latEdit.getText().toString();
+                EditText lonEdit=findViewById(R.id.editLongitude);
+                String lon=lonEdit.getText().toString();
                 EditText etName=findViewById(R.id.editName);
                 String name=etName.getText().toString();
                 EditText etDescription=findViewById(R.id.editDescription);
                 String description=etDescription.getText().toString();
                 if(!editMode) {
                     MyPlace place = new MyPlace(name, description);
+                    place.setLatitude(lat);
+                    place.setLongitude(lon);
                     MyPlacesData.getInstance().addNewPlace(place);
                 }else{
                     MyPlace place=MyPlacesData.getInstance().getPlace(pos);
                     place.setName(name);
                     place.setDescription(description);
+                    place.setLongitude(lon);
+                    place.setLatitude(lat);
                 }
                 setResult(Activity.RESULT_OK);
                 finish();
