@@ -54,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
         {
             case R.id.show_map_item:
                 Toast.makeText(this, "Show Map!", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(this,MyPlacesMapsActivity.class));
+                startActivity(new Intent(this,MyPlacesMapsActivity.class)
+                        .putExtra("state",MyPlacesMapsActivity.SHOW_MAP));
                 break;
             case R.id.new_place_item:
                 startActivityForResult(new Intent(MainActivity.this,EditMyPlaceActivity.class),NEW_PLACE);

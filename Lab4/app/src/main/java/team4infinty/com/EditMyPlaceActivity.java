@@ -8,6 +8,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -80,6 +81,9 @@ public class EditMyPlaceActivity extends AppCompatActivity implements View.OnCli
                 finishButton.setEnabled(true);
             }
         });
+
+        Button locationBtn=findViewById(R.id.buttonLocation);
+        locationBtn.setOnClickListener(this);
     }
 
     @Override
@@ -146,7 +150,30 @@ public class EditMyPlaceActivity extends AppCompatActivity implements View.OnCli
                 finish();
 
             }
+            case R.id.buttonLocation:{
+                startActivityForResult(new Intent(EditMyPlaceActivity.this,MyPlacesMapsActivity.class)
+                        .putExtra("state",MyPlacesMapsActivity.SELECT_COORDINATES),1);
+            }
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            if(resultCode==Activity.RESULT_OK){
+                String lon=data.getExtras().getString("lon");
+                EditText lonText=findViewById(R.id.editLongitude);
+                lonText.setText(lon);
+                String lat=data.getExtras().getString("lat");
+                EditText latText=findViewById(R.id.editLatitude);
+                latText.setText(lat);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }
 

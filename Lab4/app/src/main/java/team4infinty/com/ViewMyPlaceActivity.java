@@ -36,6 +36,10 @@ public class ViewMyPlaceActivity extends AppCompatActivity {
             txtName.setText(place.getName());
             TextView txtDescription=findViewById(R.id.view_my_place_description);
             txtDescription.setText(place.getDescription());
+            TextView txtLatitude=findViewById(R.id.editLatitudeView);
+            txtLatitude.setText(place.getLatitude());
+            TextView txtLongitude=findViewById(R.id.editLongitudeView);
+            txtLongitude.setText(place.getLongitude());
         }
         final Button finishedButton=findViewById(R.id.view_my_place_button);
         finishedButton.setOnClickListener(new View.OnClickListener() {

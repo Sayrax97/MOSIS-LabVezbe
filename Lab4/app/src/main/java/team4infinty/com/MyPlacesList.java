@@ -118,8 +118,8 @@ public class MyPlacesList extends AppCompatActivity {
     }
 
     private void setList(){
-        ListView myPlacesList=findViewById(R.id.my_places_list);
-        myPlacesList.setAdapter(new ArrayAdapter<MyPlace>(this,android.R.layout.simple_list_item_1,MyPlacesData.getInstance().getMyPlaces()));
+        ListView myPlacesList=findViewById(R.id.list);
+        myPlacesList.setAdapter(new ArrayAdapter<MyPlace>(this,android.R.layout.simple_spinner_item,MyPlacesData.getInstance().getMyPlaces()));
     }
 
     @Override
