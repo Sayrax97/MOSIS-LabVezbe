@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "518222346899",
+    "firebase_url": "https://my-places-62195.firebaseio.com",
+    "project_id": "my-places-62195",
+    "storage_bucket": "my-places-62195.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:518222346899:android:cae2aaa8f020aa02d12b66",
+        "android_client_info": {
+          "package_name": "team4infinty.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "518222346899-8t7o2ncvl77umsgfeo7jp0ue8dflvfft.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4a4qkJxa7olCOub2GAyJ5OpYtQD93qRE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "518222346899-8t7o2ncvl77umsgfeo7jp0ue8dflvfft.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
