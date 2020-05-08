@@ -15,7 +15,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class MyPlacesData {
+public class MyPlacesData{
     ArrayList<MyPlace> myPlaces;
     private HashMap<String,Integer> myPlacesKeyIndexMapping;
     private DatabaseReference database;
@@ -31,17 +31,47 @@ public class MyPlacesData {
     ChildEventListener childEventListener=new ChildEventListener() {
         @Override
         public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+            String myPlaceKey=dataSnapshot.getKey();
+            if(!myPlacesKeyIndexMapping.containsKey(myPlaceKey)){
+                MyPlace myPlace=dataSnapshot.getValue(MyPlace.class);
+                myPlace.key=myPlaceKey;
+                myPlaces.add(myPlace);
+                myPlacesKeyIndexMapping.put(myPlaceKey,myPlaces.size()-1);
+                if(updateListener!=null){
+                    updateListener.onListUpdated();
+                }
+            }
         }
 
         @Override
         public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
+            String myPlaceKey=dataSnapshot.getKey();
+            MyPlace myPlace=dataSnapshot.getValue(MyPlace.class);
+            myPlace.key=myPlaceKey;
+            if(myPlacesKeyIndexMapping.containsKey(myPlaceKey)){
+                int index=myPlacesKeyIndexMapping.get(myPlaceKey);
+                myPlaces.set(index,myPlace);
+            }
+            else {
+                myPlaces.add(myPlace);
+                myPlacesKeyIndexMapping.put(myPlaceKey,myPlaces.size()-1);
+            }
+            if(updateListener!=null){
+                updateListener.onListUpdated();
+            }
         }
 
         @Override
         public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-
+            String myPlaceKey=dataSnapshot.getKey();
+            if(myPlacesKeyIndexMapping.containsKey(myPlaceKey)){
+                int index=myPlacesKeyIndexMapping.get(myPlaceKey);
+                myPlaces.remove(index);
+                recreateIndexMapping();
+                if(updateListener!=null){
+                    updateListener.onListUpdated();
+                }
+            }
         }
 
         @Override
@@ -57,7 +87,9 @@ public class MyPlacesData {
     ValueEventListener parentEventListener=new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+            if(updateListener!=null){
+                updateListener.onListUpdated();
+            }
         }
 
         @Override
@@ -65,6 +97,10 @@ public class MyPlacesData {
 
         }
     };
+    ListUpdatedEventListener updateListener;
+    public void setEventListener(ListUpdatedEventListener listener){
+        updateListener=listener;
+    }
 
     public ArrayList<MyPlace> getMyPlaces() {
         return myPlaces;
@@ -82,17 +118,11 @@ public class MyPlacesData {
     }
 
     public void addNewPlace(MyPlace place){
-        Log.d(TAG, "addNewPlace: 1");
-        String key=database.getKey();
-        Log.d(TAG, "addNewPlace: 2");
+        String key=database.push().getKey();
         myPlaces.add(place);
-        Log.d(TAG, "addNewPlace: 3");
         myPlacesKeyIndexMapping.put(key,myPlaces.size()-1);
-        Log.d(TAG, "addNewPlace: 4");
         database.child(FIREBASE_CHILD).child(key).setValue(place);
-        Log.d(TAG, "addNewPlace: 5");
         place.key=key;
-        Log.d(TAG, "addNewPlace: 6");
     }
 
     public MyPlace getPlace(int index){
@@ -119,5 +149,8 @@ public class MyPlacesData {
         myPlace.latitude=lat;
         myPlace.longitude=lon;
         database.child(FIREBASE_CHILD).child(myPlace.key).setValue(myPlace);
+    }
+    public interface  ListUpdatedEventListener{
+        void onListUpdated();
     }
 }

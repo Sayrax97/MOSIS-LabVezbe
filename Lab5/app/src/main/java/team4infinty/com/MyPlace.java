@@ -63,7 +63,9 @@ public class MyPlace {
     public MyPlace(String name) {
         this(name,"");
     }
+    public MyPlace(){
 
+    }
     @Override
     public String toString() {
         return name;

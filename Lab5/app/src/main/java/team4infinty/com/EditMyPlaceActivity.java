@@ -65,6 +65,10 @@ public class EditMyPlaceActivity extends AppCompatActivity implements View.OnCli
             nameET.setText(place.getName());
             EditText descriptionET=findViewById(R.id.editDescription);
             descriptionET.setText(place.getDescription());
+            EditText latEdit=findViewById(R.id.editLatitude);
+            latEdit.setText(place.latitude);
+            EditText lonEdit=findViewById(R.id.editLongitude);
+            lonEdit.setText(place.longitude);
         }
         nameET.addTextChangedListener(new TextWatcher() {
             @Override
